@@ -1,0 +1,11 @@
+.git
+.idea
+.DS_Store
+.env
+
+code/vendor
+
+# LUMEN
+Homestead.json
+Homestead.yaml
+.phpunit.result.cache
