@@ -1,0 +1,153 @@
+create table migrations
+(
+    id        serial
+        constraint migrations_pkey
+            primary key,
+    migration varchar(255) not null,
+    batch     integer      not null
+);
+
+alter table migrations
+    owner to "default";
+
+create table skills
+(
+    id         bigserial
+        constraint skills_pkey
+            primary key,
+    title      varchar(255) not null,
+    created_at timestamp(0),
+    updated_at timestamp(0)
+);
+
+alter table skills
+    owner to "default";
+
+create table courses
+(
+    id         bigserial
+        constraint courses_pkey
+            primary key,
+    title      varchar(255) not null,
+    created_at timestamp(0),
+    updated_at timestamp(0)
+);
+
+alter table courses
+    owner to "default";
+
+create table modules
+(
+    id         bigserial
+        constraint modules_pkey
+            primary key,
+    title      varchar(255) not null,
+    course_id  bigint       not null
+        constraint modules_course_id_foreign
+            references courses,
+    created_at timestamp(0),
+    updated_at timestamp(0)
+);
+
+alter table modules
+    owner to "default";
+
+create table tasks
+(
+    id         bigserial
+        constraint tasks_pkey
+            primary key,
+    title      varchar(255) not null,
+    module_id  bigint       not null
+        constraint tasks_module_id_foreign
+            references modules,
+    created_at timestamp(0),
+    updated_at timestamp(0)
+);
+
+alter table tasks
+    owner to "default";
+
+create table students
+(
+    id         bigserial
+        constraint students_pkey
+            primary key,
+    first_name varchar(255) not null,
+    last_name  varchar(255) not null,
+    created_at timestamp(0),
+    updated_at timestamp(0)
+);
+
+alter table students
+    owner to "default";
+
+create table tasks_skills
+(
+    id         bigserial
+        constraint tasks_skills_pkey
+            primary key,
+    task_id    bigint  not null
+        constraint tasks_skills_task_id_foreign
+            references tasks,
+    skill_id   bigint  not null
+        constraint tasks_skills_skill_id_foreign
+            references skills,
+    percent    integer not null,
+    created_at timestamp(0),
+    updated_at timestamp(0)
+);
+
+alter table tasks_skills
+    owner to "default";
+
+create table students_tasks_skills_raitings
+(
+    id         bigint default nextval('students_tasks_skills_raitings_id_seq'::regclass) not null
+        constraint students_tasks_skills_raitings_pkey
+            primary key,
+    student_id bigint                                                                    not null
+        constraint students_tasks_skills_raitings_student_id_foreign
+            references students,
+    skill_id   bigint                                                                    not null
+        constraint students_tasks_skills_raitings_skill_id_foreign
+            references skills,
+    raiting    integer                                                                   not null,
+    created_at timestamp(0),
+    updated_at timestamp(0)
+);
+
+alter table students_tasks_skills_raitings
+    owner to "default";
+
+create table awards
+(
+    id         bigserial
+        constraint awards_pkey
+            primary key,
+    title      varchar(255) not null,
+    created_at timestamp(0),
+    updated_at timestamp(0)
+);
+
+alter table awards
+    owner to "default";
+
+create table students_awards
+(
+    id         bigserial
+        constraint students_awards_pkey
+            primary key,
+    student_id bigint not null
+        constraint students_awards_student_id_foreign
+            references students,
+    award_id   bigint not null
+        constraint students_awards_award_id_foreign
+            references awards,
+    created_at timestamp(0),
+    updated_at timestamp(0)
+);
+
+alter table students_awards
+    owner to "default";
+
