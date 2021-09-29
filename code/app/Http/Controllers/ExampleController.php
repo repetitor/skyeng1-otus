@@ -14,5 +14,16 @@ class ExampleController extends Controller
         //
     }
 
-    //
+    /**
+     * Get example.
+     *
+     * @OA\Get(
+     *     path="/",
+     *     @OA\Response(response="200", description="OK"),
+     * )
+     */
+    public function getExample(): string
+    {
+        return 'example';
+    }
 }
