@@ -35,6 +35,8 @@ services:
     build:
       context: ./postgre
     #    restart: always
+    image: otus/postgre-${APP_NAME}
+    container_name: postgre_${APP_NAME}
     ports:
       - ${DB_PORT}:5432
     environment:
