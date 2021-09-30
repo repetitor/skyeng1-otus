@@ -24,6 +24,6 @@ class ExampleController extends Controller
      */
     public function getExample(): string
     {
-        return 'example';
+        return 'example'.time();
     }
 }
