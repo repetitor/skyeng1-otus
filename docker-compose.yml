@@ -31,6 +31,23 @@ services:
       - app-network
 
 
+  db:
+    build:
+      context: ./postgre
+    #    restart: always
+    image: otus/postgre-${APP_NAME}
+    container_name: postgre_${APP_NAME}
+    ports:
+      - ${DB_PORT}:5432
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - ./../logs/dbdata/postgresql:/var/lib/postgresql
+      - ./../logs/postgresql-log:/var/log/postgresql
+    networks:
+      - app-network
+
+
 networks:
   app-network:
     driver: bridge
