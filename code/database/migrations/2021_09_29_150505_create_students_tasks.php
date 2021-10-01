@@ -19,7 +19,7 @@ class CreateStudentsTasks extends Migration
             $table->foreign('student_id')->references('id')->on('students');
             $table->unsignedBigInteger('task_id');
             $table->foreign('task_id')->references('id')->on('tasks');
-            $table->integer('rating');
+            $table->unsignedFloat('rating');
             $table->timestamps();
             
             $table->unique(['student_id', 'task_id']);
