@@ -55,7 +55,7 @@ $fill = [];
             $students_tasks_skills_ratings->fill([
                 'student_task_id' => $students_tasks_id,
                 'skill_id' => $skill->id,
-                'raiting' => (int)$rating,//TODO remove int
+                'raiting' => $rating,
             ])->save();
         }
 
