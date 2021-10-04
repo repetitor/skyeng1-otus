@@ -19,6 +19,23 @@ class StudentController extends Controller
     private $task_id = 0;
     private $rating = 0;
 
+    /**
+     * @OA\Post (
+     *     path="/api2/v1/student/{id}/rate-task",
+     *     @OA\Parameter(name="id", in="path", description="The identifier of student.", example=1, required=true),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(property="task", example="1"),
+     *                 @OA\Property(property="rating", example=37)
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(response="200", description="OK"),
+     * )
+     */
     public function rateTask($id, Request $request) {
         $this->id = $id;
 
