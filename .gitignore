@@ -9,3 +9,6 @@ code/vendor
 Homestead.json
 Homestead.yaml
 .phpunit.result.cache
+
+#swagger-ui
+code/public/swagger-ui-assets

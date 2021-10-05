@@ -15,16 +15,16 @@ class SkillSeeder extends Seeder
     public function run()
     {
         DB::table('skills')->insert([
-            'title' => 'skill1',
+            'title' => 'Базы данных',
         ]);
         DB::table('skills')->insert([
-            'title' => 'skill2',
+            'title' => 'Архитектура',
         ]);
         DB::table('skills')->insert([
-            'title' => 'skill3',
+            'title' => 'ОП',
         ]);
         DB::table('skills')->insert([
-            'title' => 'skill4',
+            'title' => 'Алгоритмы',
         ]);
     }
 }

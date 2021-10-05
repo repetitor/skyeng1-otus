@@ -15,16 +15,16 @@ class CourseSeeder extends Seeder
     public function run()
     {
         DB::table('courses')->insert([
-            'title' => 'course 1',
+            'id' => 1,
+            'title' => 'PHP Developer. Professional',
         ]);
         DB::table('courses')->insert([
-            'title' => 'course 2',
+            'id' => 2,
+            'title' => 'PHP Developer. Basic',
         ]);
         DB::table('courses')->insert([
-            'title' => 'course 3',
-        ]);
-        DB::table('courses')->insert([
-            'title' => 'course 4',
+            'id' => 3,
+            'title' => 'Framework Laravel',
         ]);
     }
 }

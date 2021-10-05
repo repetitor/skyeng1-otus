@@ -61,6 +61,18 @@ services:
     networks:
       - app-network
 
+  redis :
+    image: redis:latest
+    container_name : ${REDIS_SERVER}
+    ports:
+      - ${REDIS_PORT}:${REDIS_PORT}
+    volumes:
+      - ./redis/redis.conf:/redis.conf
+    command: [ "redis-server", "/redis.conf" ]
+    networks:
+      - app-network
+
+
 networks:
   app-network:
     driver: bridge

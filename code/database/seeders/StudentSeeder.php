@@ -15,24 +15,24 @@ class StudentSeeder extends Seeder
     public function run()
     {
         DB::table('students')->insert([
-            'first_name' => 'first_name student 1',
-            'last_name' => 'last_name student 1',
+            'first_name' => 'Максим',
+            'last_name' => 'Борисов',
         ]);
         DB::table('students')->insert([
-            'first_name' => 'first_name student 2',
-            'last_name' => 'last_name student 2',
+            'first_name' => 'Сергей',
+            'last_name' => 'Васильев',
         ]);
         DB::table('students')->insert([
-            'first_name' => 'first_name student 3',
-            'last_name' => 'last_name student 3',
+            'first_name' => 'Нина',
+            'last_name' => 'Кузнецова',
         ]);
         DB::table('students')->insert([
-            'first_name' => 'first_name student 4',
-            'last_name' => 'last_name student 4',
+            'first_name' => 'Антонина',
+            'last_name' => 'Федотова',
         ]);
         DB::table('students')->insert([
-            'first_name' => 'first_name student 5',
-            'last_name' => 'last_name student 5',
+            'first_name' => 'Илья',
+            'last_name' => 'Спиридонов',
         ]);
     }
 }
