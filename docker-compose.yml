@@ -22,8 +22,8 @@ services:
     image: otus/nginx-${APP_NAME}
     container_name: webserver_${APP_NAME}
     ports:
-      - "80:80"
-      - "443:443"
+      - ${NGINX_PORT80}:80
+      - ${NGINX_PORT443}:443
     volumes:
        - ./code:/data/
        - ./nginx/nginx.conf:/etc/nginx/nginx.conf
