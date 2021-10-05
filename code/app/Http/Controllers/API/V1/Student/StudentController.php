@@ -71,7 +71,7 @@ $fill = [];
             $students_tasks_skills_ratings = new StudentsTasksSkillsRaitings();
             $students_tasks_skills_ratings->fill([
                 'student_task_id' => $students_tasks_id,
-                'skill_id' => $skill->id,
+                'skill_id' => $skill->skill_id,
                 'raiting' => $rating,
             ])->save();
         }
