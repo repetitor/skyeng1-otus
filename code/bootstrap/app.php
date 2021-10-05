@@ -24,8 +24,8 @@ $app = new Laravel\Lumen\Application(
 );
 
 $app->withFacades();
+$app->withEloquent();
 
- $app->withEloquent();
 
 /*
 |--------------------------------------------------------------------------
@@ -97,6 +97,7 @@ $app->configure('swagger-lume');
 // $app->register(App\Providers\EventServiceProvider::class);
 
 $app->register(\SwaggerLume\ServiceProvider::class);
+$app->register(Illuminate\Redis\RedisServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------
