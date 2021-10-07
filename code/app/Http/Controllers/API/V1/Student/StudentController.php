@@ -19,6 +19,23 @@ class StudentController extends Controller
     private $task_id = 0;
     private $rating = 0;
 
+    /**
+     * @OA\Post (
+     *     path="/api2/v1/student/{id}/rate-task",
+     *     @OA\Parameter(name="id", in="path", description="The identifier of student.", example=1, required=true),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(property="task", example="1"),
+     *                 @OA\Property(property="rating", example=37)
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(response="200", description="OK"),
+     * )
+     */
     public function rateTask($id, Request $request) {
         $this->id = $id;
 
@@ -54,7 +71,7 @@ $fill = [];
             $students_tasks_skills_ratings = new StudentsTasksSkillsRaitings();
             $students_tasks_skills_ratings->fill([
                 'student_task_id' => $students_tasks_id,
-                'skill_id' => $skill->id,
+                'skill_id' => $skill->skill_id,
                 'raiting' => $rating,
             ])->save();
         }

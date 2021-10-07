@@ -5,10 +5,36 @@
         "version": "1.0.0"
     },
     "paths": {
-        "/": {
-            "get": {
-                "summary": "Get example.",
-                "operationId": "b49ce256cab8988eb75f352105215e7c",
+        "/api2/v1/student/{id}/rate-task": {
+            "post": {
+                "operationId": "79ce6eaafe98b099ebee82ae28cc785c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The identifier of student.",
+                        "required": true,
+                        "example": 1
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "task": {
+                                        "example": "1"
+                                    },
+                                    "rating": {
+                                        "example": 37
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "OK"
