@@ -25,3 +25,9 @@ php artisan swagger-lume:generate # to generate docs
 
 Скопировать содержимое папки `/vendor/swagger-api/swagger-ui/dist/`  
 в `public/swagger-ui-assets` (или сделать симлинк)
+  
+## run tests
+```shell
+# cd code
+phpunit
+```
