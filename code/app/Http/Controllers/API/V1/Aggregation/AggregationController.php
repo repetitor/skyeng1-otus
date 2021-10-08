@@ -20,8 +20,10 @@ class AggregationController extends Controller
     public function getAggregationForstudentByType(Request $request)
     {
         switch ($request->aggregation_type) {
-            case Aggregation::TYPE_TIME:
-                return $this->service->getStudentAggregationByTime($request->student_id);
+            case Aggregation::TYPE_TIME_TODAY:
+                return $this->service->getStudentAggregationByTimeToday($request->student_id);
+            case Aggregation::TYPE_TIME_MONTH:
+                return $this->service->getStudentAggregationByTimeMonth($request->student_id);
             case Aggregation::TYPE_TASKS_SKILLS:
                 return $this->service->getStudentAggregationByTasksSkills($request->student_id);
             case Aggregation::TYPE_COURSES:
