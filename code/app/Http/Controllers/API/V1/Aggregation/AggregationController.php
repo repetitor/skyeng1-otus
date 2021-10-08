@@ -17,6 +17,20 @@ class AggregationController extends Controller
         $this->service = $service;
     }
 
+    /**
+     * @OA\Get(
+     *     path="/api2/v1/aggregation/{aggregation_type}/student/{student_id}",
+     *     @OA\Parameter(name="student_id", in="path", description="The student-identifier.", example=1, required=true),
+     *     @OA\Parameter(
+     *      name="aggregation_type",
+     *      in="path",
+     *      description="types: time-today, time-month, skills, courses",
+     *      example="time-today",
+     *      required=true
+     *     ),
+     *     @OA\Response(response="200", description="OK"),
+     * )
+     */
     public function getAggregationForstudentByType(Request $request)
     {
         switch ($request->aggregation_type) {

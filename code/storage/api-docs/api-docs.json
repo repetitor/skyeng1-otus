@@ -5,6 +5,32 @@
         "version": "1.0.0"
     },
     "paths": {
+        "/api2/v1/aggregation/{aggregation_type}/student/{student_id}": {
+            "get": {
+                "operationId": "cf1a9f854a37f769e1aeaf80e2238997",
+                "parameters": [
+                    {
+                        "name": "student_id",
+                        "in": "path",
+                        "description": "The student-identifier.",
+                        "required": true,
+                        "example": 1
+                    },
+                    {
+                        "name": "aggregation_type",
+                        "in": "path",
+                        "description": "types: time-today, time-month, skills, courses",
+                        "required": true,
+                        "example": "time-today"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
         "/api2/v1/student/{id}/rate-task": {
             "post": {
                 "operationId": "79ce6eaafe98b099ebee82ae28cc785c",
