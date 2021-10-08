@@ -16,11 +16,11 @@
 //$router->get('/', function () use ($router) {
 //    return $router->app->version();
 //});
-//$router->get('/', 'ExampleController@getExample');
-$router->get('/', function () use ($router) {
-    return 'Please use REST API ' . time();
-});
 
+$router->get('/', function () use ($router) {
+    return 'Please use REST API ';
+});
+$router->get('/test-redis', 'ExampleController@testRedis');
 
 
 $router->group(['prefix' => 'api2'], function() use ($router) {

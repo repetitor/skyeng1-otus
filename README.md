@@ -3,10 +3,17 @@
 app.local
 
 ```shell
+cp .env.example .env
+cp code/.env.example code/.env
+docker-compose build
+docker-compose up -d
+docker-compose exec --user=1000:1000 php bash #1000 - user id & group id
+#>>
+cd /data
 composer install
-
 php artisan migrate
 php artisan db:seed
+ln -s vendor/swagger-api/swagger-ui/dist/ public/swagger-ui-assets
 ```
 
 # Swagger
@@ -18,3 +25,9 @@ php artisan swagger-lume:generate # to generate docs
 
 Скопировать содержимое папки `/vendor/swagger-api/swagger-ui/dist/`  
 в `public/swagger-ui-assets` (или сделать симлинк)
+  
+## run tests
+```shell
+# cd code
+phpunit
+```
