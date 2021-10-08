@@ -4,17 +4,17 @@ namespace App\Services;
 
 class AggregationService
 {
-    public function aggregateStudentByTime(int $studentId)
+    public function getStudentAggregationByTime(int $studentId)
     {
         return 'time-aggregation';
     }
 
-    public function aggregateStudentByTasksSkills(int $studentId)
+    public function getStudentAggregationByTasksSkills(int $studentId)
     {
         return 'tasks-skills-aggregation';
     }
 
-    public function aggregateStudentByCourses(int $studentId)
+    public function getStudentAggregationByCourses(int $studentId)
     {
         return 'courses-aggregation';
     }

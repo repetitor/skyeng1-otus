@@ -28,7 +28,7 @@ $router->group(['prefix' => 'api2'], function() use ($router) {
         $router->post('/student/{id:\d+}/rate-task', 'API\V1\Student\StudentController@rateTask');
         $router->get(
             '/aggregation/{aggregation_type}/student/{student_id:\d+}',
-            'API\V1\Aggregation\AggregationController@aggregateStudentByType'
+            'API\V1\Aggregation\AggregationController@getAggregationForstudentByType'
         );
     });
 });//*/
