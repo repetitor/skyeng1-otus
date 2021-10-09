@@ -31,7 +31,7 @@ jobs:
         KEY: ${{ secrets.SSHKEY }}
       with:
         source: "."
-        target: "/home/deployuser"
+        target: "/home/deployuser/prj"
 
     - name: Executing remote  command
       uses: appleboy/ssh-action@master
@@ -40,7 +40,7 @@ jobs:
         USERNAME: ${{ secrets.USERNAME }}
         PORT: ${{ secrets.PORT }}
         KEY: ${{ secrets.SSHKEY }}
-        script: cat /opt/app/README.md
+        script: cat /home/deployuser/prj/README.md
 
 # env:
 #   AZURE_WEBAPP_NAME: your-app-name    # set this to your application's name
