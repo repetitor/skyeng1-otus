@@ -27,4 +27,16 @@ jobs:
 #         port: ${{ secrets.PORT }}
         source: .
         target: "/home/autodeploy/prj"
-#         script: whoami
+        
+    - name: multiple command
+      uses: ./
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+#         port: ${{ secrets.PORT }}
+        script: |
+          whoami
+          ls -al
+
+      
