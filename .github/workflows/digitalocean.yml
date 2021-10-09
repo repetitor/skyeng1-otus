@@ -32,11 +32,11 @@ jobs:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         KEY: ${{ secrets.SSHKEY }}
-        port: ${{ secrets.PORT }}
-        script: whoami
-#       with:
-#         source: "."
-#         target: "/home/autodeploy/prj"
+#         port: ${{ secrets.PORT }}
+#         script: whoami
+      with:
+        source: .
+        target: "/home/autodeploy/prj"
 
 #     - name: Executing remote  command
 #       uses: appleboy/ssh-action@master
