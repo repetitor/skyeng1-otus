@@ -34,22 +34,22 @@ jobs:
         KEY: ${{ secrets.SSHKEY }}
         port: ${{ secrets.PORT }}
         script: whoami
-      with:
-        source: "."
-        target: "/home/autodeploy/prj"
+#       with:
+#         source: "."
+#         target: "/home/autodeploy/prj"
 
-    - name: Executing remote  command
-      uses: appleboy/ssh-action@master
-      with:
+#     - name: Executing remote  command
+#       uses: appleboy/ssh-action@master
+#       with:
+# #         host: ${{ secrets.HOST }}
+# #         USERNAME: ${{ secrets.USERNAME }}
+# #         PORT: ${{ secrets.PORT }}
+# #         KEY: ${{ secrets.SSHKEY }}
 #         host: ${{ secrets.HOST }}
-#         USERNAME: ${{ secrets.USERNAME }}
-#         PORT: ${{ secrets.PORT }}
+#         username: ${{ secrets.USERNAME }}
 #         KEY: ${{ secrets.SSHKEY }}
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        KEY: ${{ secrets.SSHKEY }}
-        port: ${{ secrets.PORT }}
-        script: cat /home/autodeploy/prj/README.md
+#         port: ${{ secrets.PORT }}
+#         script: cat /home/autodeploy/prj/README.md
 
 # env:
 #   AZURE_WEBAPP_NAME: your-app-name    # set this to your application's name
