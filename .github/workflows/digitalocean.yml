@@ -30,9 +30,9 @@ jobs:
 #         PORT: ${{ secrets.PORT }}
 #         KEY: ${{ secrets.SSHKEY }}
         host: ${{ secrets.HOST }}
-        port: ${{ secrets.PORT }}
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.SSHKEY }}
+        port: ${{ secrets.PORT }}
         script: whoami
       with:
         source: "."
@@ -46,9 +46,9 @@ jobs:
 #         PORT: ${{ secrets.PORT }}
 #         KEY: ${{ secrets.SSHKEY }}
         host: ${{ secrets.HOST }}
-        port: ${{ secrets.PORT }}
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.SSHKEY }}
+        port: ${{ secrets.PORT }}
         script: cat /home/autodeploy/prj/README.md
 
 # env:
