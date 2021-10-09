@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Laravel\Lumen\Routing\Controller as BaseController;
+use App\Queue\RabbitMQProducer;
 
 /**
  * @OA\Info(
@@ -13,4 +14,14 @@ use Laravel\Lumen\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
     //
+    protected function asyncRequest( string $command, array $data) : array
+    {
+        $producer = new RabbitMQProducer();
+        $producer->publish($command, $data);
+
+        return [
+            'command' => $command,
+            'message'=>'Task added to queue',
+        ];
+    }
 }
