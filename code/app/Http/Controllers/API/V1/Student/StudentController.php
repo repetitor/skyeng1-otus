@@ -26,7 +26,7 @@ class StudentController extends Controller
      *             mediaType="application/json",
      *             @OA\Schema(
      *                 @OA\Property(property="task", example="1"),
-     *                 @OA\Property(property="rating", example=37)
+     *                 @OA\Property(property="rating", example=7)
      *             )
      *         )
      *     ),
