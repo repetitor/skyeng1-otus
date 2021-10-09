@@ -81,6 +81,8 @@ class AggregationController extends Controller
             '13 june 1999' => '358',
         ];
 
+        // АЧИВКА
+
         Cache::put( Redis::getKeyName( self::CACHE_KEY_TYPE_STUDENT, $type, $student_id ) , json_encode( $result ), Redis::STORAGE_TIME_AGGREGATIONS_IN_MINUTES );
     }
     private function _aggregateForStudentByTasksSkills( int $student_id ) : void
@@ -90,6 +92,8 @@ class AggregationController extends Controller
             'coding' => '45',
             'databases' => '9',
         ];
+
+        // АЧИВКА
 
         Cache::put( Redis::getKeyName( self::CACHE_KEY_TYPE_STUDENT, Aggregation::TYPE_TASKS_SKILLS, $student_id ) , json_encode( $result ), Redis::STORAGE_TIME_AGGREGATIONS_IN_MINUTES );
 
@@ -101,6 +105,8 @@ class AggregationController extends Controller
             'beginner' => '23',
             'professional' => '33',
         ];
+
+        // АЧИВКА
 
         Cache::put( Redis::getKeyName( self::CACHE_KEY_TYPE_STUDENT, Aggregation::TYPE_COURSES, $student_id ) , json_encode( $result ), Redis::STORAGE_TIME_AGGREGATIONS_IN_MINUTES );
 
