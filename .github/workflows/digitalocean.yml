@@ -2,11 +2,17 @@
 #   release:
 #     types: [created]
     
+# on:
+#   push:
+#     branches:
+#     - $default-branch
+#   pull_request:
+
 on:
   push:
-    branches:
-    - $default-branch
+    branches: [ dev ]
   pull_request:
+    branches: [ dev ]
   
 jobs:
   build:
