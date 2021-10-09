@@ -29,7 +29,11 @@ jobs:
         target: "/home/autodeploy/prj"
         
     - name: multiple command
-      uses: ./
+      uses: appleboy/ssh-action@master
+      env:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        KEY: ${{ secrets.SSHKEY }}
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
