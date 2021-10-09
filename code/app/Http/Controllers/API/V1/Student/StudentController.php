@@ -15,9 +15,6 @@ use function PHPUnit\Framework\isEmpty;
 
 class StudentController extends Controller
 {
-    private $id = 0;
-    private $task_id = 0;
-    private $rating = 0;
 
     /**
      * @OA\Post (
@@ -37,52 +34,70 @@ class StudentController extends Controller
      * )
      */
     public function rateTask($id, Request $request) {
-        $this->id = $id;
+        $this->_validate($id, $request);
 
-        $this->_validate($request);
+        $data = [];
 
-        $this->task_id = $request->get('task');
-        $this->rating = $request->get('rating');
+        $data[] = $this->asyncRequest( 'student_task_rate', array(
+            'student_id' => $id,
+            'task_id' => $request->get('task'),
+            'rating' => $request->get('rating'),
+        ) );
 
-        $task_skills = DB::table('tasks_skills')->where('task_id', $this->task_id)->get();
+        $data[] = $this->asyncRequest( 'student_aggregation_tasks_skills', array(
+            'student_id' => $id
+        ) );
+        $data[] = $this->asyncRequest( 'student_aggregation_time_today', array(
+            'student_id' => $id
+        ) );
+        $data[] = $this->asyncRequest( 'student_aggregation_time_month', array(
+            'student_id' => $id
+        ) );
+        $data[] = $this->asyncRequest( 'student_aggregation_courses', array(
+            'student_id' => $id
+        ) );
 
-        if ( $task_skills->isEmpty() ) {
-            return response('Task has no skills.', 422);
+        return response($data, 200);
+    }
+
+    public function insertTaskRating( array $params ) : bool
+    {
+        if ( !$this->_validatePreInsert($params) ) {
+            return false;
         }
 
-        $students_tasks = StudentsTasks::where('student_id', $this->id)->where('task_id', $this->task_id)->get();
-        if ( !$students_tasks->isEmpty() )
-        {
-            return response('This task for this student was already rated', 422);
-        }
+        $student_id = $params['student_id'];
+        $task_id = $params['task_id'];
+        $rating = $params['rating'];
+
+        $task_skills = DB::table('tasks_skills')->where('task_id', $task_id)->get();
 
         $students_tasks = new StudentsTasks();
         $students_tasks->fill([
-            'student_id' => $this->id,
-            'task_id' => $this->task_id,
-            'rating' => $this->rating,
+            'student_id' => $student_id,
+            'task_id' => $task_id,
+            'rating' => $rating,
         ])->save();
 
         $students_tasks_id = $students_tasks->id;
-$fill = [];
 
         foreach ( $task_skills as $skill ) {
-            $rating = $this->rating * ( $skill->percent / 100 );
+            $skill_rating = $rating * ( $skill->percent / 100 );
             $students_tasks_skills_ratings = new StudentsTasksSkillsRaitings();
             $students_tasks_skills_ratings->fill([
                 'student_task_id' => $students_tasks_id,
                 'skill_id' => $skill->skill_id,
-                'raiting' => $rating,
+                'raiting' => $skill_rating,
             ])->save();
         }
 
-        return response('Rating was added successfully', 200);
+        return true;
     }
 
-    private function _validate(Request $request)
+    private function _validate(string $id, Request $request)
     {
-        if (!Student::where('id', $this->id)->exists()) {
-            return response('Student with ID='.$this->id.' doesn\'t exist.', 422);
+        if ( !$this->_validateStudentId($id) ) {
+            return response('Student with ID='.$id.' doesn\'t exist.', 422);
         }
 
         $this->validate($request, [
@@ -90,21 +105,84 @@ $fill = [];
             'rating' => 'required'
         ]);
 
-        $response = [];
-
-        if (!Task::where('id', $request->get('task') )->exists()) {
-            $response['task'] = 'Doesn\'t exist';
+        if ( !$this->_validateStudentTasks($id, (int) $request->get('task') ) ) {
+            return response('This task for this student was already rated', 422);
         }
 
-        if ( !TaskController::validateRating( (int) $request->get('rating') ) ) {
-            $response['rating'] = 'Should not be less than ' . TaskController::MIN_RAITNG . ' or more than ' . TaskController::MAX_RATING;
+        if ( !$this->_validateTaskId((int) $request->get('task')) ) {
+            return response('Task with ID-'.$id.' doesn\'t exist.', 422);
+        }
+        if ( !$this->_validateTaskSkills((int) $request->get('task')) ) {
+            return response('Task has no skills.', 422);
         }
 
-        if ( !empty( $response ) ) {
-            return response([
-
-            ], 422);
+        if ( !$this->_validateRating((int) $request->get('rating')) ) {
+            return response('Should not be less than ' . TaskController::MIN_RAITNG . ' or more than ' . TaskController::MAX_RATING, 422);
         }
 
+    }
+
+    private function _validatePreInsert( array $params)
+    {
+        if ( !$this->_validateStudentId($params['student_id']) ) {
+            return false;
+        }
+
+        if ( !$this->_validateStudentTasks($params['student_id'], (int) $params['task_id'] ) ) {
+            return false;
+        }
+
+        if ( !$this->_validateTaskId((int) $params['task_id']) ) {
+            return false;
+        }
+
+        if ( !$this->_validateTaskSkills((int) $params['task_id']) ) {
+            return false;
+        }
+
+        if ( !$this->_validateRating((int) $params['rating']) ) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private function _validateStudentId( string $id ) : bool
+    {
+        if (!Student::where('id', $id)->exists()) {
+            return false;
+        }
+        return true;
+    }
+    private function _validateStudentTasks( string $id, int $task_id ) : bool
+    {
+        $students_tasks = StudentsTasks::where('student_id', $id)->where('task_id', $task_id)->count();
+        if ( $students_tasks != 0 ) {
+            return false;
+        }
+        return true;
+    }
+    private function _validateTaskId( string $id ) : bool
+    {
+        if (!Task::where('id', $id)->exists()) {
+            return false;
+        }
+        return true;
+    }
+    private function _validateTaskSkills( string $id ) : bool
+    {
+        $task_skills = DB::table('tasks_skills')->where('task_id', $id)->count();
+
+        if ( $task_skills == 0 ) {
+            return false;
+        }
+        return true;
+    }
+    private function _validateRating( int $rating ) : bool
+    {
+        if ( !TaskController::validateRating( $rating ) ) {
+            return false;
+        }
+        return true;
     }
 }
