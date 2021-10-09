@@ -15,10 +15,14 @@ jobs:
       uses: actions/checkout@v1
 
     - name: executing remote ssh commands using ssh key
-      uses: ./
+      uses: appleboy/scp-action@master
+      env:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        KEY: ${{ secrets.SSHKEY }}
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.KEY }}
-        port: ${{ secrets.PORT }}
+#         port: ${{ secrets.PORT }}
         script: whoami
