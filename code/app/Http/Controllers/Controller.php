@@ -14,7 +14,7 @@ use App\Queue\RabbitMQProducer;
 class Controller extends BaseController
 {
     //
-    protected function asyncRequest( string $command, array $data) : array
+    public function asyncRequest( string $command, array $data) : array
     {
         $producer = new RabbitMQProducer();
         $producer->publish($command, $data);
