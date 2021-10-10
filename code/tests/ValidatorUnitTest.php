@@ -5,7 +5,7 @@ use App\Validators\RateTaskValidator;
 use Laravel\Lumen\Testing\DatabaseMigrations;
 use Laravel\Lumen\Testing\DatabaseTransactions;
 
-class ValidatorTest extends TestCase
+class ValidatorUnitTest extends TestCase
 {
     use DatabaseMigrations;
 
