@@ -7,6 +7,7 @@
     "paths": {
         "/api2/v1/aggregation/{aggregation_type}/student/{student_id}": {
             "get": {
+                "summary": "Get result of aggregation for student",
                 "operationId": "cf1a9f854a37f769e1aeaf80e2238997",
                 "parameters": [
                     {
@@ -19,7 +20,7 @@
                     {
                         "name": "aggregation_type",
                         "in": "path",
-                        "description": "types: time-today, time-month, skills, courses",
+                        "description": "types: time-today, time-month, tasks-skills, courses",
                         "required": true,
                         "example": "time-today"
                     }
@@ -33,6 +34,7 @@
         },
         "/api2/v1/student/{id}/rate-task": {
             "post": {
+                "summary": "Save rating of student",
                 "operationId": "79ce6eaafe98b099ebee82ae28cc785c",
                 "parameters": [
                     {
@@ -53,7 +55,7 @@
                                         "example": "1"
                                     },
                                     "rating": {
-                                        "example": 37
+                                        "example": 7
                                     }
                                 },
                                 "type": "object"
@@ -61,6 +63,26 @@
                         }
                     }
                 },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api2/v1/student/{id}/awards": {
+            "get": {
+                "summary": "Get awards of student",
+                "operationId": "c569079cf5721bdc8f839b429e4b588f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The student-identifier.",
+                        "required": true,
+                        "example": 1
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK"

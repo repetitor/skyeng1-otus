@@ -22,6 +22,8 @@ class AggregationController extends Controller
     }
 
     /**
+     * Get result of aggregation for student
+     *
      * @OA\Get(
      *     path="/api2/v1/aggregation/{aggregation_type}/student/{student_id}",
      *     @OA\Parameter(name="student_id", in="path", description="The student-identifier.", example=1, required=true),

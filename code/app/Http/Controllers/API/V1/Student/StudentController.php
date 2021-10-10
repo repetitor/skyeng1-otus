@@ -17,6 +17,8 @@ class StudentController extends Controller
 {
 
     /**
+     * Save rating of student
+     *
      * @OA\Post (
      *     path="/api2/v1/student/{id}/rate-task",
      *     @OA\Parameter(name="id", in="path", description="The identifier of student.", example=1, required=true),
@@ -184,5 +186,21 @@ class StudentController extends Controller
             return false;
         }
         return true;
+    }
+
+    /**
+     * Get awards of student
+     *
+     * @OA\Get(
+     *     path="/api2/v1/student/{id}/awards",
+     *     @OA\Parameter(name="id", in="path", description="The student-identifier.", example=1, required=true),
+     *     @OA\Response(response="200", description="OK"),
+     * )
+     */
+    public function getAwards(Request $request)
+    {
+        $studentId = $request->id;
+
+        return 'todo: awards of student id = ' . $studentId;
     }
 }
