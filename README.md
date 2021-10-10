@@ -13,7 +13,9 @@ cd /data
 composer install
 php artisan migrate
 php artisan db:seed
-ln -s vendor/swagger-api/swagger-ui/dist/ public/swagger-ui-assets
+
+#ln -s vendor/swagger-api/swagger-ui/dist/ public/swagger-ui-assets
+cp -r vendor/swagger-api/swagger-ui/dist/ public/swagger-ui-assets
 
 cd /data/console
 php console.php student_task_rate & php console.php student_aggregation_tasks_skills & php console.php student_aggregation_time_today & php console.php student_aggregation_time_month & php console.php student_aggregation_courses
@@ -36,7 +38,9 @@ Open PHP docker by cli: docker-compose exec php bash
 
 Need change directory: cd /data/console
 
-Run command: php console.php student_task_rate & php console.php student_aggregation_tasks_skills & php console.php student_aggregation_time_today & php console.php student_aggregation_time_month & php console.php student_aggregation_courses
+Run command: php console.php student_task_rate & php console.php student_aggregation_tasks_skills & \
+php console.php student_aggregation_time_today & php console.php student_aggregation_time_month & \
+php console.php student_aggregation_courses
   
 ## run tests
 ```shell
