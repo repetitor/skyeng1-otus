@@ -15,13 +15,12 @@ class AwardSeeder extends Seeder
     public function run()
     {
         DB::table('awards')->insert([
-            'title' => 'award 1',
+            'title' => '5 задач курса выполнены больше чем на 6 балов',
+            'alias' => '5_tasks_rated_above_6',
         ]);
         DB::table('awards')->insert([
-            'title' => 'award 2',
-        ]);
-        DB::table('awards')->insert([
-            'title' => 'award 3',
+            'title' => 'Выполнены все задания модуля',
+            'alias' => 'all_module_tasks',
         ]);
     }
 }

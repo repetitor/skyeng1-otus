@@ -6,11 +6,11 @@ namespace App\Http\Controllers\API\V1\Student;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\StudentsTasks;
+use App\Models\StudentsAwards as StudentsAwardsModel;
 use App\Models\StudentsTasksSkillsRaitings;
-use App\Http\Controllers\API\V1\Task\TaskController;
 use Illuminate\Support\Facades\DB;
-use function PHPUnit\Framework\isEmpty;
 use App\Validators\RateTaskValidator;
+use App\Http\Controllers\API\V1\Student\StudentAwards as StudentAwardsController;
 
 class StudentController extends Controller
 {
@@ -20,6 +20,7 @@ class StudentController extends Controller
      *
      * @OA\Post (
      *     path="/api2/v1/student/{id}/rate-task",
+     *     tags={"Student API"},
      *     @OA\Parameter(name="id", in="path", description="The identifier of student.", example=1, required=true),
      *     @OA\RequestBody(
      *         required=true,
@@ -63,6 +64,9 @@ class StudentController extends Controller
             'student_id' => $request->id
         ) );
         $data[] = $this->asyncRequest( 'student_aggregation_courses', array(
+            'student_id' => $request->id
+        ) );
+        $data[] = $this->asyncRequest( 'student_receive_awards', array(
             'student_id' => $request->id
         ) );
 
@@ -112,14 +116,37 @@ class StudentController extends Controller
      *
      * @OA\Get(
      *     path="/api2/v1/student/{id}/awards",
+     *     tags={"Student API"},
      *     @OA\Parameter(name="id", in="path", description="The student-identifier.", example=1, required=true),
      *     @OA\Response(response="200", description="OK"),
      * )
      */
     public function getAwards(Request $request)
     {
-        $studentId = $request->id;
+        $student_id = $request->id;
 
-        return 'todo: awards of student id = ' . $studentId;
+        $awards = DB::select('
+            SELECT
+                awards.title,
+                students_awards.created_at
+            FROM students_awards
+                LEFT JOIN awards on students_awards.award_id = awards.id
+            WHERE
+                students_awards.student_id=:id
+        ', ['id'=>$student_id]);
+
+
+
+        return $awards;
+    }
+
+    public function receiveAwards( array $params ) : bool
+    {
+        $student_id = $params['student_id'];
+
+        $student_awards = new StudentAwardsController();
+        $student_awards->receiveAwards($student_id);
+
+        return true;
     }
 }
