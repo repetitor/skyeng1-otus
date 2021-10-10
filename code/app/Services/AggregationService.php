@@ -13,12 +13,34 @@ class AggregationService
     public function getStudentAggregationByTimeToday(int $student_id) : array
     {
         $result = $this->_getStudentAggregationByType( $student_id, Aggregation::TYPE_TIME_TODAY);
+        if ( $result !== false ) {
+            return $result;
+        } else {
+            $controller = new Controller();
+            $controller->asyncRequest( 'student_aggregation_time_today', array(
+                'student_id' => $student_id
+            ) );
+
+            return ['message'=>'Aggregation was not calculated yet. Please try later.'];
+        }
+
         return $result;
     }
 
     public function getStudentAggregationByTimeMonth(int $student_id) : array
     {
         $result = $this->_getStudentAggregationByType( $student_id, Aggregation::TYPE_TIME_MONTH);
+        if ( $result !== false ) {
+            return $result;
+        } else {
+            $controller = new Controller();
+            $controller->asyncRequest( 'student_aggregation_time_month', array(
+                'student_id' => $student_id
+            ) );
+
+            return ['message'=>'Aggregation was not calculated yet. Please try later.'];
+        }
+
         return $result;
     }
 

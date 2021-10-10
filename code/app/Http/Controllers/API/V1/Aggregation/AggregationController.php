@@ -78,14 +78,23 @@ class AggregationController extends Controller
 
     private function _aggregateForStudentByTime( int $student_id, $type ) : void
     {
-        //SQL...
-        $result = [
-            'type' => $type,
-            '12 june 1999' => '25',
-            '13 june 1999' => '358',
-        ];
+        switch ( $type )
+        {
+            case 'time-today':
+                $interval = '1 day';
+                break;
+            case 'time-month':
+                $interval = '1 month';
+                break;
+        }
 
-        // АЧИВКА
+        $result = DB::select('
+            SELECT
+                SUM(rating) as sum_rating
+            FROM students_tasks
+            WHERE student_id = :id
+            AND created_at > NOW() - interval \''.$interval.'\'
+        ', ['id' => $student_id] );
 
         Cache::put( Redis::getKeyName( self::CACHE_KEY_TYPE_STUDENT, $type, $student_id ) , json_encode( $result ), Redis::STORAGE_TIME_AGGREGATIONS_IN_MINUTES );
     }
@@ -122,8 +131,6 @@ class AggregationController extends Controller
             GROUP BY courses.title, modules.title
             ORDER BY courses.title, modules.title
         ', ['id' => $student_id] );
-
-        // АЧИВКА
 
         Cache::put( Redis::getKeyName( self::CACHE_KEY_TYPE_STUDENT, Aggregation::TYPE_COURSES, $student_id ) , json_encode( $result ), Redis::STORAGE_TIME_AGGREGATIONS_IN_MINUTES );
 
