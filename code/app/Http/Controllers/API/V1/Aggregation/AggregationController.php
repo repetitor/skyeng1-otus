@@ -27,6 +27,7 @@ class AggregationController extends Controller
      *
      * @OA\Get(
      *     path="/api2/v1/aggregation/{aggregation_type}/student/{student_id}",
+     *     tags={"Aggregation API"},
      *     @OA\Parameter(name="student_id", in="path", description="The student-identifier.", example=1, required=true),
      *     @OA\Parameter(
      *      name="aggregation_type",

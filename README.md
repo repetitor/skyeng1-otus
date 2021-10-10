@@ -18,7 +18,7 @@ php artisan db:seed
 cp -r vendor/swagger-api/swagger-ui/dist/ public/swagger-ui-assets
 
 cd /data/console
-php console.php student_task_rate & php console.php student_aggregation_tasks_skills & php console.php student_aggregation_time_today & php console.php student_aggregation_time_month & php console.php student_aggregation_courses
+php console.php student_task_rate & php console.php student_aggregation_tasks_skills & php console.php student_aggregation_time_today & php console.php student_aggregation_time_month & php console.php student_aggregation_courses & php console.php student_receive_awards
 ```
 
 ## Swagger
