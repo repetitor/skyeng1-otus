@@ -15,7 +15,7 @@ class TaskController extends Controller
 
     public static function validateRating( int $rating ) : bool
     {
-        if ( $rating < self::MIN_RAITNG && $rating > self::MAX_RATING ) {
+        if ( $rating < self::MIN_RAITNG || $rating > self::MAX_RATING ) {
             return false;
         }
         return true;
