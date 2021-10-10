@@ -53,6 +53,7 @@ class AggregationService
     public function getStudentAggregationByCourses(int $student_id) : array
     {
         $result = $this->_getStudentAggregationByType( $student_id, Aggregation::TYPE_COURSES );
+        //$result = false;
         if ( $result !== false ) {
             return $result;
         } else {
