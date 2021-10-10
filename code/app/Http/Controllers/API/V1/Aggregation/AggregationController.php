@@ -9,6 +9,7 @@ use App\Services\AggregationService;
 use App\Models\Aggregation;
 use App\Storage\Redis;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class AggregationController extends Controller
 {
@@ -102,11 +103,24 @@ class AggregationController extends Controller
     }
     private function _aggregateForStudentByCourses( int $student_id ) : void
     {
-        //SQL...
-        $result = [
-            'beginner' => '23',
-            'professional' => '33',
-        ];
+        $result = DB::select('
+            SELECT
+                  courses.title as courses_title,
+                  modules.title as modules_title,
+                  SUM( students_tasks_skills_raitings.raiting )
+
+            FROM students_tasks_skills_raitings, students_tasks
+                LEFT JOIN tasks ON tasks.id = students_tasks.task_id
+                LEFT JOIN modules ON modules.id = tasks.module_id
+                LEFT JOIN courses ON courses.id = modules.course_id
+
+            WHERE
+              students_tasks_skills_raitings.student_task_id = students_tasks.id
+              AND
+              students_tasks.student_id = 1
+            GROUP BY courses.title, modules.title
+            ORDER BY courses.title, modules.title
+        ');
 
         // АЧИВКА
 
