@@ -132,7 +132,17 @@ class AggregationController extends Controller
             ORDER BY courses.title, modules.title
         ', ['id' => $student_id] );
 
-        Cache::put( Redis::getKeyName( self::CACHE_KEY_TYPE_STUDENT, Aggregation::TYPE_COURSES, $student_id ) , json_encode( $result ), Redis::STORAGE_TIME_AGGREGATIONS_IN_MINUTES );
+        $result_2 = [];
+        foreach ( $result as $row )
+        {
+            if ( empty( $result_2[ $row->courses_title ] ) )
+            {
+                $result_2[ $row->courses_title ] = [];
+            }
+            $result_2[ $row->courses_title ][ $row->modules_title ] = $row->sum;
+        }
+
+        Cache::put( Redis::getKeyName( self::CACHE_KEY_TYPE_STUDENT, Aggregation::TYPE_COURSES, $student_id ) , json_encode( $result_2 ), Redis::STORAGE_TIME_AGGREGATIONS_IN_MINUTES );
 
     }
 }
