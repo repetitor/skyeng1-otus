@@ -117,10 +117,10 @@ class AggregationController extends Controller
             WHERE
               students_tasks_skills_raitings.student_task_id = students_tasks.id
               AND
-              students_tasks.student_id = 1
+              students_tasks.student_id = :id
             GROUP BY courses.title, modules.title
             ORDER BY courses.title, modules.title
-        ');
+        ', ['id' => $student_id] );
 
         // АЧИВКА
 
