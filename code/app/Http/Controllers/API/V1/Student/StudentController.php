@@ -197,8 +197,10 @@ class StudentController extends Controller
      *     @OA\Response(response="200", description="OK"),
      * )
      */
-    public function getAwards()
+    public function getAwards(Request $request)
     {
-        return 'todo: awards of student';
+        $studentId = $request->id;
+
+        return 'todo: awards of student id = ' . $studentId;
     }
 }
