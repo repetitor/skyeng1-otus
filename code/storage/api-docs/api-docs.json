@@ -7,6 +7,9 @@
     "paths": {
         "/api2/v1/aggregation/{aggregation_type}/student/{student_id}": {
             "get": {
+                "tags": [
+                    "Aggregation API"
+                ],
                 "summary": "Get result of aggregation for student",
                 "operationId": "cf1a9f854a37f769e1aeaf80e2238997",
                 "parameters": [
@@ -34,6 +37,9 @@
         },
         "/api2/v1/student/{id}/rate-task": {
             "post": {
+                "tags": [
+                    "Student API"
+                ],
                 "summary": "Save rating of student",
                 "operationId": "79ce6eaafe98b099ebee82ae28cc785c",
                 "parameters": [
@@ -72,6 +78,9 @@
         },
         "/api2/v1/student/{id}/awards": {
             "get": {
+                "tags": [
+                    "Student API"
+                ],
                 "summary": "Get awards of student",
                 "operationId": "c569079cf5721bdc8f839b429e4b588f",
                 "parameters": [

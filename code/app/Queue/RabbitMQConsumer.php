@@ -85,6 +85,11 @@ class RabbitMQConsumer extends RabbitMQ implements QueueConsumerInterface
                 $aggregation_controller->aggregateForStudentByType( $data['student_id'], Aggregation::TYPE_COURSES );
                 $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
                 break;
+            case 'student_receive_awards':
+                $student_controller = new StudentController();
+                $student_controller->receiveAwards( $data );
+                $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
+                break;
             default:
                 break;
         }
