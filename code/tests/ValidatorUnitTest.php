@@ -9,7 +9,6 @@ class ValidatorUnitTest extends TestCase
 {
     use DatabaseMigrations;
 
-
     /**
      * @var \App\Validators\ValidatorInterface
      */
@@ -28,9 +27,14 @@ class ValidatorUnitTest extends TestCase
     private function createValidObject(): void
     {
         $this->validator = new RateTaskValidator();
-        $this->validator->setStudentId(1);
-        $this->validator->setTaskId(1);
-        $this->validator->setRating(1);
+
+        $validStudentId = 1; // todo
+        $this->validator->setStudentId($validStudentId);
+
+        $validTaskId = 1; // todo
+        $this->validator->setTaskId($validTaskId);
+
+        $this->validator->setRating(TaskController::MAX_RATING);
     }
 
     public function testSuccess()
