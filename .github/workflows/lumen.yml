@@ -26,4 +26,5 @@ jobs:
       env:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
-      run: cd code && vendor/bin/phpunit
+      run: cd code && vendor/bin/phpunit  --filter testExample
+
