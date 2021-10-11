@@ -47,7 +47,17 @@ class AggregationService
     public function getStudentAggregationByTasksSkills(int $student_id) : array
     {
         $result = $this->_getStudentAggregationByType( $student_id, Aggregation::TYPE_TASKS_SKILLS );
-        return $result;
+        //$result = false;
+        if ( $result !== false ) {
+            return $result;
+        } else {
+            $controller = new Controller();
+            $controller->asyncRequest( 'student_aggregation_tasks_skills', array(
+                'student_id' => $student_id
+            ) );
+
+            return ['message'=>'Aggregation was not calculated yet. Please try later.'];
+        }
     }
 
     public function getStudentAggregationByCourses(int $student_id) : array
