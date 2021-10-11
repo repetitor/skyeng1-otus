@@ -100,14 +100,23 @@ class AggregationController extends Controller
     }
     private function _aggregateForStudentByTasksSkills( int $student_id ) : void
     {
-        //SQL...
-        $result = [
-            'coding' => '45',
-            'databases' => '9',
-        ];
+        $result = DB::select('
+            SELECT
+                SUM(st.rating) as sum,
+                tasks.title,
+                stsr2.skill_id,
+                stsr2.raiting,
+                skills.title
+	        FROM  students_tasks st
+	        JOIN students_tasks_skills_raitings stsr2 ON  st.task_id = stsr2.student_task_id
+	        join tasks on tasks.id = st.task_id
+	        join skills on stsr2.skill_id = skills.id
+	        where st.student_id = :id
+	        group by tasks.title,stsr2.skill_id,stsr2.raiting,skills.title
+	        order by sum desc
+        ', ['id' => $student_id] );
 
         // АЧИВКА
-
         Cache::put( Redis::getKeyName( self::CACHE_KEY_TYPE_STUDENT, Aggregation::TYPE_TASKS_SKILLS, $student_id ) , json_encode( $result ), Redis::STORAGE_TIME_AGGREGATIONS_IN_MINUTES );
 
     }
