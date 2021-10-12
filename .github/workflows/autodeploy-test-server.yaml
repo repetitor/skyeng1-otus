@@ -37,7 +37,7 @@ jobs:
         script: |
           whoami
           ls -al
-          cp project/code/.env.example cp project/code/.env
+          cp project/code/.env.example project/code/.env
           sed -i 's@APP_URL=http://localhost@APP_URL=http://128.199.56.118/@' project/code/.env
           sed -i 's@DB_HOST=postgre_se1@DB_HOST=postgres@' project/code/.env
           sed -i 's@DB_DATABASE=task_storage@DB_DATABASE=default@' project/code/.env
