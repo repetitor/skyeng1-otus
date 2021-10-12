@@ -1,0 +1,51 @@
+on:
+  push:
+    branches: [ dev ]
+  pull_request:
+    branches: [ dev ]
+jobs:
+
+  deploy-to-test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v1
+
+    - name: executing remote ssh commands using ssh key
+      uses: appleboy/scp-action@master
+      env:
+        host: ${{ secrets.HOST_TESTER }}
+        username: ${{ secrets.USERNAME_TESTER }}
+        KEY: ${{ secrets.SSHKEY_TESTER }}
+      with:
+        host: ${{ secrets.HOST_TESTER }}
+        username: ${{ secrets.USERNAME_TESTER }}
+        key: ${{ secrets.KEY_TESTER }}
+        source: .
+        target: "/home/u3tester/project"
+        
+    - name: multiple command
+      uses: appleboy/ssh-action@master
+      env:
+        host: ${{ secrets.HOST_TESTER }}
+        username: ${{ secrets.USERNAME_TESTER }}
+        KEY: ${{ secrets.SSHKEY_TESTER }}
+      with:
+        host: ${{ secrets.HOST_TESTER }}
+        username: ${{ secrets.USERNAME_TESTER }}
+        key: ${{ secrets.KEY_TESTER }}
+        script: |
+          whoami
+          ls -al
+          cd otus-laradock && docker-compose exec -T workspace composer install
+          cd otus-laradock && docker-compose exec -T workspace php artisan migrate:fresh --seed
+          cd otus-laradock && docker-compose stop
+          cd otus-laradock && docker-compose up -d nginx postgres redis rabbitmq
+          cd otus-laradock && docker-compose exec -T workspace cd console && php console.php student_task_rate &
+          cd otus-laradock && docker-compose exec -T workspace cd console && php console.php student_aggregation_tasks_skills &
+          cd otus-laradock && docker-compose exec -T workspace cd console && php console.php student_aggregation_time_today &
+          cd otus-laradock && docker-compose exec -T workspace cd console && php console.php student_aggregation_time_month &
+          cd otus-laradock && docker-compose exec -T workspace cd console && php console.php student_aggregation_courses &
+          cd otus-laradock && docker-compose exec -T workspace cd console && php console.php student_receive_awards &
+
+      
