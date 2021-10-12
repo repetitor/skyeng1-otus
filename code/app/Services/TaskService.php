@@ -1,14 +1,8 @@
 <?php
 
+namespace App\Services;
 
-namespace App\Http\Controllers\API\V1\Task;
-
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Models\Student;
-use App\Models\Task;
-
-class TaskController extends Controller
+class TaskService
 {
     const MIN_RAITNG = 1;
     const MAX_RATING = 10;

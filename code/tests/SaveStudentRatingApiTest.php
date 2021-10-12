@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\API\V1\Task\TaskController;
+use App\Services\TaskService;
 use Laravel\Lumen\Testing\DatabaseMigrations;
 use Laravel\Lumen\Testing\DatabaseTransactions;
 
@@ -26,7 +26,7 @@ class SaveStudentRatingApiTest extends TestCase
     {
         $this->post(self::URI, [
             'task' => self::VALID_TASK_ID,
-            'rating' => TaskController::MAX_RATING,
+            'rating' => TaskService::MAX_RATING,
         ]);
 
         $this->assertResponseStatus(200);
@@ -36,7 +36,7 @@ class SaveStudentRatingApiTest extends TestCase
     {
         $this->post(self::URI, [
             'task' => self::VALID_TASK_ID,
-            'rating' => TaskController::MIN_RAITNG,
+            'rating' => TaskService::MIN_RAITNG,
         ]);
 
         $this->assertResponseStatus(200);
@@ -46,7 +46,7 @@ class SaveStudentRatingApiTest extends TestCase
     {
         $this->post(self::URI, [
             'task' => self::VALID_TASK_ID,
-            'rating' => TaskController::MIN_RAITNG - 1,
+            'rating' => TaskService::MIN_RAITNG - 1,
         ]);
 
         $this->assertResponseStatus(422);
@@ -56,7 +56,7 @@ class SaveStudentRatingApiTest extends TestCase
     {
         $this->post(self::URI, [
             'task' => self::VALID_TASK_ID,
-            'rating' => TaskController::MAX_RATING + 1,
+            'rating' => TaskService::MAX_RATING + 1,
         ]);
 
         $this->assertResponseStatus(422);
