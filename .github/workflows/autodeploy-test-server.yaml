@@ -21,7 +21,7 @@ jobs:
         host: ${{ secrets.HOST_TESTER }}
         username: ${{ secrets.USERNAME_TESTER }}
         key: ${{ secrets.KEY_TESTER }}
-        source: .
+        source: "./code"
         target: "/home/u3tester/project"
         
     - name: multiple command
