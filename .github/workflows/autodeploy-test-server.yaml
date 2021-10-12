@@ -37,15 +37,16 @@ jobs:
         script: |
           whoami
           ls -al
-          cd otus-laradock && docker-compose exec -T workspace composer install
-          cd otus-laradock && docker-compose exec -T workspace php artisan migrate:fresh --seed
-          cd otus-laradock && docker-compose stop
-          cd otus-laradock && docker-compose up -d nginx postgres redis rabbitmq
-          cd otus-laradock && docker-compose exec -T workspace cd console && php console.php student_task_rate &
-          cd otus-laradock && docker-compose exec -T workspace cd console && php console.php student_aggregation_tasks_skills &
-          cd otus-laradock && docker-compose exec -T workspace cd console && php console.php student_aggregation_time_today &
-          cd otus-laradock && docker-compose exec -T workspace cd console && php console.php student_aggregation_time_month &
-          cd otus-laradock && docker-compose exec -T workspace cd console && php console.php student_aggregation_courses &
-          cd otus-laradock && docker-compose exec -T workspace cd console && php console.php student_receive_awards &
+          cd otus-laradock
+          docker-compose exec -T workspace composer install
+          docker-compose exec -T workspace php artisan migrate:fresh --seed
+          docker-compose stop
+          docker-compose up -d nginx postgres redis rabbitmq
+          docker-compose exec -T workspace cd console && php console.php student_task_rate &
+          docker-compose exec -T workspace cd console && php console.php student_aggregation_tasks_skills &
+          docker-compose exec -T workspace cd console && php console.php student_aggregation_time_today &
+          docker-compose exec -T workspace cd console && php console.php student_aggregation_time_month &
+          docker-compose exec -T workspace cd console && php console.php student_aggregation_courses &
+          docker-compose exec -T workspace cd console && php console.php student_receive_awards &
 
       
