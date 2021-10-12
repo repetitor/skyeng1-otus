@@ -37,10 +37,21 @@ jobs:
         script: |
           whoami
           ls -al
+          cp project/code/.env.example cp project/code/.env
+          sed -i 's@APP_URL=http://localhost@APP_URL=http://128.199.56.118/@' project/code/.env
+          sed -i 's@DB_HOST=postgre_se1@DB_HOST=postgres@' project/code/.env
+          sed -i 's@DB_DATABASE=task_storage@DB_DATABASE=default@' project/code/.env
+          sed -i 's@DB_USERNAME=admin@DB_USERNAME=default@' project/code/.env
+          sed -i 's@DB_PASSWORD=123@DB_PASSWORD=secret@' project/code/.env
+          sed -i 's@REDIS_SERVER=redisserver_se1@REDIS_SERVER=redis@' project/code/.env
+          sed -i 's@RABBITMQ_HOST=rabbit-mq@RABBITMQ_HOST=rabbitmq@' project/code/.env
+          sed -i 's@RABBITMQ_USER=user@RABBITMQ_USER=guest@' project/code/.env
+          sed -i 's@RABBITMQ_PASSWORD=password@RABBITMQ_PASSWORD=guest@' project/code/.env
           cd otus-laradock
           docker-compose exec -T workspace composer install
           docker-compose exec -T workspace php artisan migrate:fresh --seed
           docker-compose stop
+          docker-compose down
           docker-compose up -d nginx postgres redis rabbitmq
           docker-compose exec -T workspace bash -c "cd console && php console.php student_task_rate &"
           docker-compose exec -T workspace bash -c "cd console && php console.php student_aggregation_tasks_skills &"
