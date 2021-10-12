@@ -42,11 +42,11 @@ jobs:
           docker-compose exec -T workspace php artisan migrate:fresh --seed
           docker-compose stop
           docker-compose up -d nginx postgres redis rabbitmq
-          docker-compose exec -T workspace bash cd console && php console.php student_task_rate &
-          docker-compose exec -T workspace bash cd console && php console.php student_aggregation_tasks_skills &
-          docker-compose exec -T workspace bash cd console && php console.php student_aggregation_time_today &
-          docker-compose exec -T workspace bash cd console && php console.php student_aggregation_time_month &
-          docker-compose exec -T workspace bash cd console && php console.php student_aggregation_courses &
-          docker-compose exec -T workspace bash cd console && php console.php student_receive_awards &
+          docker-compose exec -T workspace bash -с "cd console && php console.php student_task_rate &"
+          docker-compose exec -T workspace bash -с "cd console && php console.php student_aggregation_tasks_skills &"
+          docker-compose exec -T workspace bash -с "cd console && php console.php student_aggregation_time_today &"
+          docker-compose exec -T workspace bash -с "cd console && php console.php student_aggregation_time_month &"
+          docker-compose exec -T workspace bash -с "cd console && php console.php student_aggregation_courses &"
+          docker-compose exec -T workspace bash -с "cd console && php console.php student_receive_awards &"
 
       
