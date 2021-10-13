@@ -116,8 +116,14 @@ class AggregationController extends Controller
 	        order by sum desc
         ', ['id' => $student_id] );
 
+        foreach ( $result as $row ) {
+            $format_array[$row->tasks.title][] = ['total_raiting' => $row->sum,
+                                                  'skill_name'      => $row->skills.title,
+                                                  'skill_raiting'   => $row->raiting];
+        }
+        
         // АЧИВКА
-        Cache::put( Redis::getKeyName( self::CACHE_KEY_TYPE_STUDENT, Aggregation::TYPE_TASKS_SKILLS, $student_id ) , json_encode( $result ), Redis::STORAGE_TIME_AGGREGATIONS_IN_MINUTES );
+        Cache::put( Redis::getKeyName( self::CACHE_KEY_TYPE_STUDENT, Aggregation::TYPE_TASKS_SKILLS, $student_id ) , json_encode( $format_array ), Redis::STORAGE_TIME_AGGREGATIONS_IN_MINUTES );
 
     }
     private function _aggregateForStudentByCourses( int $student_id ) : void
