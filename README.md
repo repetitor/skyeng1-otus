@@ -40,3 +40,7 @@ php artisan swagger-lume:generate # to generate docs
 # cd code
 phpunit
 ```
+
+
+
+### Проектная работа выполнена для курса "[PHP Developer. Professional](https://otus.ru/lessons/razrabotchik-php/)"

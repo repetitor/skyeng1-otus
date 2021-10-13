@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\API\V1\Task\TaskController;
+use App\Services\TaskService;
 use App\Validators\RateTaskValidator;
 use Laravel\Lumen\Testing\DatabaseMigrations;
 use Laravel\Lumen\Testing\DatabaseTransactions;
@@ -34,7 +34,7 @@ class ValidatorUnitTest extends TestCase
         $validTaskId = 1; // todo
         $this->validator->setTaskId($validTaskId);
 
-        $this->validator->setRating(TaskController::MAX_RATING);
+        $this->validator->setRating(TaskService::MAX_RATING);
     }
 
     public function testSuccess()
@@ -69,7 +69,7 @@ class ValidatorUnitTest extends TestCase
     public function testUnvalidRatingLessThanMin()
     {
         $this->createValidObject();
-        $this->validator->setRating(TaskController::MIN_RAITNG - 1);
+        $this->validator->setRating(TaskService::MIN_RAITNG - 1);
         $result = $this->validator->validate();
 
         $this->assertFalse($result);
@@ -78,7 +78,7 @@ class ValidatorUnitTest extends TestCase
     public function testUnvalidRatingMoreThanMax()
     {
         $this->createValidObject();
-        $this->validator->setRating(TaskController::MAX_RATING + 1);
+        $this->validator->setRating(TaskService::MAX_RATING + 1);
         $result = $this->validator->validate();
 
         $this->assertFalse($result);

@@ -11,6 +11,7 @@ use App\Models\StudentsTasksSkillsRaitings;
 use Illuminate\Support\Facades\DB;
 use App\Validators\RateTaskValidator;
 use App\Http\Controllers\API\V1\Student\StudentAwards as StudentAwardsController;
+use App\Models\Module;
 
 class StudentController extends Controller
 {
@@ -125,9 +126,11 @@ class StudentController extends Controller
     {
         $student_id = $request->id;
 
-        $awards = DB::select('
+        $result = DB::select('
             SELECT
+                awards.alias,
                 awards.title,
+                students_awards.params,
                 students_awards.created_at
             FROM students_awards
                 LEFT JOIN awards on students_awards.award_id = awards.id
@@ -135,7 +138,25 @@ class StudentController extends Controller
                 students_awards.student_id=:id
         ', ['id'=>$student_id]);
 
+        $awards = [];
 
+        foreach ($result as $row) {
+            $award = [
+                'award' => $row->title,
+                'time' => $row->created_at,
+            ];
+            switch ( $row->alias ) {
+                case '5_tasks_rated_above_6':
+                    break;
+                case 'all_module_tasks':
+                    $module = Module::where('id',json_decode($row->params, 1)['module_id'])->first();
+                    $award['module'] = $module->title;
+                    break;
+                default:
+                    break;
+            }
+            $awards[] = $award;
+        }
 
         return $awards;
     }

@@ -3,7 +3,7 @@
 namespace App\Validators;
 
 use App\Validators\ValidatorInterface;
-use App\Http\Controllers\API\V1\Task\TaskController;
+use App\Services\TaskService;
 use App\Models\Student;
 use App\Models\StudentsTasks;
 use App\Models\Task;
@@ -149,7 +149,7 @@ class RateTaskValidator implements ValidatorInterface
 
     private function _validateRating() : bool
     {
-        if ( !TaskController::validateRating($this->rating) ) {
+        if ( !TaskService::validateRating($this->rating) ) {
             return false;
         }
         return true;
