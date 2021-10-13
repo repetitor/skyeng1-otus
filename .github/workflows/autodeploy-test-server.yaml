@@ -51,6 +51,7 @@ jobs:
           docker-compose stop
           docker-compose up -d nginx postgres redis rabbitmq
           docker-compose exec -T workspace composer install
+          docker-compose exec -T workspace php artisan migrate
           docker-compose exec -T workspace bash -c "cd console && php console.php student_task_rate &"
           docker-compose exec -T workspace bash -c "cd console && php console.php student_aggregation_tasks_skills &"
           docker-compose exec -T workspace bash -c "cd console && php console.php student_aggregation_time_today &"
