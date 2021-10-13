@@ -103,10 +103,10 @@ class AggregationController extends Controller
         $result = DB::select('
             SELECT
                 SUM(st.rating) as sum,
-                tasks.title,
-                stsr2.skill_id,
-                stsr2.raiting,
-                skills.title
+                tasks.title as task_title,
+                stsr2.skill_id as skill_id,
+                stsr2.raiting as raiting,
+                skills.title as title
 	        FROM  students_tasks st
 	        JOIN students_tasks_skills_raitings stsr2 ON  st.task_id = stsr2.student_task_id
 	        join tasks on tasks.id = st.task_id
@@ -117,11 +117,11 @@ class AggregationController extends Controller
         ', ['id' => $student_id] );
 
         foreach ( $result as $row ) {
-            $format_array[$row->tasks.title][] = ['total_raiting' => $row->sum,
-                                                  'skill_name'      => $row->skills.title,
-                                                  'skill_raiting'   => $row->raiting];
+            $format_array[$row->task_title][] = ['total_raiting' => $row->sum,
+                'skill_name'      => $row->title,
+                'skill_raiting'   => $row->raiting];
         }
-        
+
         // АЧИВКА
         Cache::put( Redis::getKeyName( self::CACHE_KEY_TYPE_STUDENT, Aggregation::TYPE_TASKS_SKILLS, $student_id ) , json_encode( $format_array ), Redis::STORAGE_TIME_AGGREGATIONS_IN_MINUTES );
 
